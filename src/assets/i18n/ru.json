@@ -1,0 +1,14 @@
+{
+    "login-form": {
+        "email": "Email",
+        "password": "Пароль",
+        "submit": "Войти"
+    },
+    "register-form": {
+        "email": "Email",
+        "name": "Имя",
+        "password": "Пароль",
+        "confirm": "Подтвердите пароль",
+        "submit": "Зарегестрироваться"
+    }
+}

@@ -1,0 +1,13 @@
+<ion-content>
+
+    <ion-row class="ion-justify-content-center ion-no-padding" style="height: 100vh">
+        <ion-col size-lg="4" size-xl="4" size-md="6" size-sm="10" size-xs="12" class="ion-no-padding">
+            <div *ngIf="options" style="height: 100%; width: 100%"
+                 leaflet
+                 [leafletOptions]="options"
+                 (leafletMapReady)="onMapReady($event)"
+            >
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-content>

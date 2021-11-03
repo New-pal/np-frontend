@@ -1,0 +1,27 @@
+<form [formGroup]="formService.form" (ngSubmit)="submitRegister()" (keydown.enter)="submitRegister()">
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.email' | translate }}</ion-label>
+        <ion-input type="text" name="email" [formControlName]="formFields.email" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.name' | translate }}</ion-label>
+        <ion-input type="text" name="email" [formControlName]="formFields.name" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.password' | translate }}</ion-label>
+        <ion-input type="password" name="email" [formControlName]="formFields.password" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.confirm' | translate }}</ion-label>
+        <ion-input type="password" name="email" [formControlName]="formFields.confirm" ></ion-input>
+    </ion-item>
+    <ion-button
+        expand="block"
+        fill="solid"
+        color="primary"
+        class="ion-margin-top"
+        type="submit"
+    >
+        {{ 'register-form.submit' | translate }}
+    </ion-button>
+</form>
