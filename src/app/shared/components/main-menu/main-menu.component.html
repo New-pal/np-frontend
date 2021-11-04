@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Navigate</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list class="ion-no-padding">
+        <ion-menu-toggle menu="main-menu" [autoHide]="false">
+            <ion-item
+                routerLink="/auth/login"
+                routerLinkActive="active"
+                lines="full"
+            >
+                <ion-icon name="log-in-outline" slot="start"></ion-icon>
+                {{ 'menu.login' | translate }}
+            </ion-item>
+            <ion-item
+                routerLink="/auth/register"
+                routerLinkActive="active"
+                lines="full"
+            >
+                <ion-icon name="reader-outline" slot="start"></ion-icon>
+                {{ 'menu.register' | translate }}
+            </ion-item>
+        </ion-menu-toggle>
+    </ion-list>
+</ion-content>

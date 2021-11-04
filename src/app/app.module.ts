@@ -16,6 +16,7 @@ import {GlobalErrorHandlerService} from './core/services/global-error-handler.se
 import {HeadersInterceptor} from './core/services/headers-interceptor.service';
 import {environment} from '@env/environment';
 import {JsonTranslateLoader} from '@app/core/services/json-translate-loader';
+import {SharedModule} from '@app/shared/shared.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -38,7 +39,8 @@ import {JsonTranslateLoader} from '@app/core/services/json-translate-loader';
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-        LeafletModule.forRoot()
+        LeafletModule.forRoot(),
+        SharedModule,
     ],
     providers: [
         // {

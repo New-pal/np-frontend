@@ -1,4 +1,8 @@
 {
+    "menu": {
+        "login": "Sign in",
+        "register": "Sign up"
+    },
     "login-form": {
         "email": "Email",
         "password": "Password",
