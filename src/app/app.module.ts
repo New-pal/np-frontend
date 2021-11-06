@@ -43,30 +43,30 @@ import {SharedModule} from '@app/shared/shared.module';
         SharedModule,
     ],
     providers: [
-        // {
-        //     provide: APP_INITIALIZER,
-        //     useFactory: (initService: AppInitService) => () => initService.init(),
-        //     multi: true,
-        //     deps: [AppInitService]
-        // },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (initService: AppInitService) => () => initService.init(),
+            multi: true,
+            deps: [AppInitService]
+        },
         {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy
         },
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: AuthInterceptor,
-        //     multi: true
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeadersInterceptor,
             multi: true
         },
-        // {
-        //     provide: ErrorHandler,
-        //     useClass: GlobalErrorHandlerService
-        // }
+        {
+            provide: ErrorHandler,
+            useClass: GlobalErrorHandlerService
+        }
     ],
     bootstrap: [AppComponent]
 })

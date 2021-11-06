@@ -27,7 +27,6 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     }
 
     public handleError(error: Error): void {
-
         if (isTokenError(error)) {
             this.showMessage(AUTHENTICATION_ERROR);
             this.router.navigateByUrl('/auth/login');
@@ -47,6 +46,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
 
     private handleHttpErrorResponse(response: HttpErrorResponse): void {
         if (400 === response.status) {
+            // eslint-disable-next-line no-underscore-dangle
             const all = response.error?.error?.__all__ || response.error?.__all__;
             const messages: string[] = Array.isArray(all)
                 ? all
