@@ -3,7 +3,8 @@ import {AuthResponseInterface} from '@app/auth/interfaces/auth-response.interfac
 import {once} from '@app/core/decorators/once';
 import {ErrorList} from '@app/core/enums/error-list';
 import {StorageManagerService} from '@app/core/proxies/storage-manager.service';
-import {Observable, Subject, timer} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, timer} from 'rxjs';
+import {filter, first, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -14,17 +15,19 @@ export class TokenManagerService {
     private tokenData: AuthResponseInterface;
     private readonly storageKey = 'newpal_token_data';
     private readonly isExpSubject$: Subject<boolean> = new Subject<boolean>();
+    private readonly initSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private readonly storage: StorageManagerService) {
         this.isExpired$ = this.isExpSubject$.asObservable();
     }
 
     @once
-    public init(): void {
+    public init(): Promise<void> {
         timer(0, 1000).subscribe(() =>
             this.isRefreshTokenExpired().then(isExp => this.isExpSubject$.next(isExp))
-                .catch(_ => this.isExpSubject$.next(true))
+                .catch(() => this.isExpSubject$.next(true)).finally(() => this.initSubject$.next(true))
         );
+        return this.initSubject$.pipe(filter(inited => inited), first(), map(() => void 0)).toPromise();
     }
 
     public getAccessToken(): Promise<string> {

@@ -3,11 +3,12 @@ import {UserApiService} from '@app/profile/services/api/user-api.service';
 import {AuthenticationService} from '@app/core/services/authentication.service';
 import {Observable, of, ReplaySubject} from 'rxjs';
 import {User} from '@app/profile/models/user';
-import {NgDestroyService} from '@app/core/services/ng-destroy.service';
 import {once} from '@app/core/decorators/once';
 import {filter, map, switchMap, tap} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UserManagerService {
 
     public readonly user$: Observable<User | null>;
@@ -21,14 +22,14 @@ export class UserManagerService {
     }
 
     @once
-    public init(): Promise<boolean> {
+    public init(): Promise<void> {
         return new Promise(resolve => {
             this.auth.isAuthenticated$.pipe(
+                tap(() => resolve(void 0)),
                 filter(a => !a)
             ).subscribe(
                 () => this.userSubject$.next(null)
             );
-            resolve(true);
         });
     }
 

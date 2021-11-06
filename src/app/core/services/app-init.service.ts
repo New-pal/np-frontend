@@ -22,13 +22,12 @@ export class AppInitService {
     public init(): Promise<any> {
         return new Promise<any>(resolve => {
             this.platform.ready().then(async () => {
-                this.tokenManager.init();
-                this.auth.init().then(
-                    () => Promise.all([
-                        this.userManager.init()
-                    ]).catch(error => this.errorHandler.handleError(error)).finally(() => resolve(null))
-                );
-            }).catch(error => this.errorHandler.handleError(error)).finally(() => resolve(null));
+                await this.tokenManager.init();
+                await this.auth.init();
+                await Promise.all([
+                    this.userManager.init()
+                ]);
+            }).catch(error => this.errorHandler.handleError(error)).finally(() => resolve(void 0));
         });
     }
 }

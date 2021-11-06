@@ -5,7 +5,9 @@ import {ApiClientService} from '@app/core/services/api-client.service';
 import {plainToClass} from 'class-transformer';
 import {environment} from '@env/environment';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UserApiService extends AbstractApiService<User> {
 
     constructor(protected client: ApiClientService) {

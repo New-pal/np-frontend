@@ -8,8 +8,8 @@ import {ApiClientService} from '@app/core/services/api-client.service';
 import {PreLogoutService} from '@app/core/services/pre-logout.service';
 import {TokenManagerService} from '@app/core/services/token-manager.service';
 import {environment} from '@env/environment';
-import {EMPTY, from, Observable, of, ReplaySubject} from 'rxjs';
-import {first, switchMap, tap} from 'rxjs/operators';
+import {BehaviorSubject, EMPTY, from, Observable, of, ReplaySubject} from 'rxjs';
+import {catchError, filter, first, map, switchMap, tap} from 'rxjs/operators';
 
 /**
  *  Main authentication service
@@ -23,6 +23,7 @@ export class AuthenticationService {
     private readonly isAuthenticatedSubject$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private readonly tokenObtainUrl = environment.backend.auth;
     private readonly tokenRefreshUrl = environment.backend.refresh;
+    private readonly initSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(
         private readonly tokenManager: TokenManagerService,
@@ -34,31 +35,24 @@ export class AuthenticationService {
 
     @once
     public init(): Promise<void> {
-        return new Promise<void>(resolve => this.tokenManager.isRefreshTokenExpired()
-            .then(isExp => {
-                if (!isExp) {
+        from(this.tokenManager.isRefreshTokenExpired()).pipe(
+            switchMap(expired => {
+                if (!expired) {
                     return this.needToRefresh().pipe(
-                        switchMap(isNeed => isNeed ?
-                            this.refresh().pipe(
-                                tap(() => resolve()),
-                                tap(_ => this.isAuthenticatedSubject$.next(!isExp))
-                            ) : of(this.isAuthenticatedSubject$.next(!isExp))
+                        switchMap(need => need
+                            ? this.refresh().pipe(map(() => true))
+                            : of(true)
                         )
-                    ).subscribe(
-                        () => null,
-                        _ => this.isAuthenticatedSubject$.next(false));
+                    );
                 }
-                this.isAuthenticatedSubject$.next(!isExp);
-            })
-            .catch(_ => this.isAuthenticatedSubject$.next(false))
-            .finally(
-                () => {
-                    this.tokenManager.isExpired$.subscribe(isExpired => this.isAuthenticated$.pipe(first()).subscribe(
-                        previousIsAuthStatus => isExpired === previousIsAuthStatus ? this.isAuthenticatedSubject$.next(!isExpired) : EMPTY
-                    ));
-                    resolve();
-                })
-        );
+                return of(false);
+            }),
+            catchError(() => of(false)),
+            tap(isAuth => this.isAuthenticatedSubject$.next(isAuth)),
+            tap(() => this.initSubject$.next(true))
+        ).subscribe(() => this.subscribeToTokenExp());
+
+        return this.initSubject$.pipe(filter(inited => inited), first(), map(() => void 0)).toPromise();
     }
 
     public login({email, password}: Credentials): Observable<void> {
@@ -103,5 +97,16 @@ export class AuthenticationService {
                 }).catch(err => subscriber.error(err));
             }
         );
+    }
+
+    private subscribeToTokenExp(): void {
+        this.tokenManager.isExpired$.subscribe(isExpired => this.isAuthenticatedSubject$.pipe(first()).subscribe(
+            previousIsAuthStatus => {
+                console.log(isExpired);
+                if (isExpired === previousIsAuthStatus) {
+                    this.isAuthenticatedSubject$.next(!isExpired);
+                }
+            }
+        ));
     }
 }
