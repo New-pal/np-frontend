@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RegisterFormFields} from '@app/auth/enums/register-form-fields';
 
 @Injectable()
@@ -10,10 +10,6 @@ export class RegisterFormService {
     constructor(private readonly builder: FormBuilder) {
     }
 
-    public isFormValid(): boolean {
-        return !this.form.valid;
-    }
-
     public initForm(): void {
         this.form = this.builder.group({
             [RegisterFormFields.email]: ['', Validators.compose([
@@ -22,11 +18,14 @@ export class RegisterFormService {
                     '(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]' +
                     '{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$')
             ])],
-            [RegisterFormFields.name]: ['', Validators.required],
+            [RegisterFormFields.firstName]: ['', Validators.required],
+            [RegisterFormFields.lastName]: [''],
+            [RegisterFormFields.gender]: ['', Validators.required],
             [RegisterFormFields.password]: ['', Validators.required],
             [RegisterFormFields.confirm]: ['', Validators.required]
         },
-            {validators: this.checkPassword});
+            {validators: this.checkPassword}
+        );
     }
 
     private checkPassword(group: FormGroup): any {
@@ -36,10 +35,10 @@ export class RegisterFormService {
 
         if (isDirtyAndValid(passwordControl) && isDirtyAndValid(confirmControl)) {
             if (passwordControl.value !== confirmControl.value) {
-                return { passwordMismatch: true };
+                confirmControl.setErrors({ passwordMismatch: true });
             }
+        } else {
+            return null;
         }
-
-        return null;
     }
 }

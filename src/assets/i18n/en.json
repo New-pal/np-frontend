@@ -1,4 +1,8 @@
 {
+    "tabs": {
+        "map": "Map",
+        "search": "Search"
+    },
     "menu": {
         "login": "Sign in",
         "register": "Sign up"
@@ -10,9 +14,13 @@
     },
     "register-form": {
         "email": "Email",
-        "name": "Name",
         "password": "Password",
         "confirm": "Confirm password",
-        "submit": "Sign up"
+        "submit": "Sign up",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "gender": "Gender",
+        "male": "male",
+        "female": "female"
     }
 }

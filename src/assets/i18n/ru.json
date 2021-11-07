@@ -1,6 +1,13 @@
 {
+    "tabs": {
+        "map": "Карта",
+        "search": "Поиск"
+    },
     "menu": {
         "login": "Войти",
+        "register": "Зарегистрироваться"
+    },
+    "login-page": {
         "register": "Зарегистрироваться"
     },
     "login-form": {
@@ -10,9 +17,13 @@
     },
     "register-form": {
         "email": "Email",
-        "name": "Имя",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "gender": "Пол",
         "password": "Пароль",
         "confirm": "Подтвердите пароль",
+        "male": "муж.",
+        "female": "жен.",
         "submit": "Зарегестрироваться"
     }
 }

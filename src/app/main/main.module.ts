@@ -7,10 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {MainPageRoutingModule} from './main-routing.module';
 
 import {MainPage} from './main.page';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {LocationService} from '@app/core/services/location/location.service';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {LocationAccuracy} from '@ionic-native/location-accuracy/ngx';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -18,14 +15,9 @@ import {LocationAccuracy} from '@ionic-native/location-accuracy/ngx';
         FormsModule,
         IonicModule,
         MainPageRoutingModule,
-        LeafletModule
+        TranslateModule
     ],
-    declarations: [MainPage],
-    providers: [
-        LocationService,
-        Geolocation,
-        LocationAccuracy
-    ]
+    declarations: [MainPage]
 })
 export class MainPageModule {
 }

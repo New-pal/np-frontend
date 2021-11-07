@@ -102,7 +102,6 @@ export class AuthenticationService {
     private subscribeToTokenExp(): void {
         this.tokenManager.isExpired$.subscribe(isExpired => this.isAuthenticatedSubject$.pipe(first()).subscribe(
             previousIsAuthStatus => {
-                console.log(isExpired);
                 if (isExpired === previousIsAuthStatus) {
                     this.isAuthenticatedSubject$.next(!isExpired);
                 }

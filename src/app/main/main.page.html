@@ -1,21 +1,14 @@
 <ion-content>
-
-    <ion-fab vertical="top" horizontal="start" slot="fixed">
-        <ion-menu-toggle menu="main-menu">
-            <ion-button size="small">
-                <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-        </ion-menu-toggle>
-    </ion-fab>
-
-    <ion-row class="ion-justify-content-center ion-no-padding height100vh">
-        <ion-col size-lg="4" size-xl="4" size-md="6" size-sm="10" size-xs="12" class="ion-no-padding">
-            <div *ngIf="options" class="map-size"
-                 leaflet
-                 [leafletOptions]="options"
-                 (leafletMapReady)="onMapReady($event)"
-            >
-            </div>
-        </ion-col>
-    </ion-row>
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="map">
+                <ion-icon name="map-outline"></ion-icon>
+                <ion-label>{{ 'tabs.map' | translate }}</ion-label>
+            </ion-tab-button>
+            <ion-tab-button tab="search">
+                <ion-icon name="search-outline"></ion-icon>
+                <ion-label>{{ 'tabs.search' | translate }}</ion-label>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-tabs>
 </ion-content>

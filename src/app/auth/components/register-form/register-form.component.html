@@ -4,16 +4,33 @@
         <ion-input type="text" name="email" [formControlName]="formFields.email" ></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.name' | translate }}</ion-label>
-        <ion-input type="text" name="email" [formControlName]="formFields.name" ></ion-input>
-    </ion-item>
-    <ion-item>
         <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.password' | translate }}</ion-label>
         <ion-input type="password" name="email" [formControlName]="formFields.password" ></ion-input>
     </ion-item>
     <ion-item>
         <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.confirm' | translate }}</ion-label>
         <ion-input type="password" name="email" [formControlName]="formFields.confirm" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.firstName' | translate }}</ion-label>
+        <ion-input type="text" name="email" [formControlName]="formFields.firstName" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="medium" position="floating">{{ 'register-form.lastName' | translate }}</ion-label>
+        <ion-input type="text" name="email" [formControlName]="formFields.lastName" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="label-for-required-input" color="medium" position="floating">{{ 'register-form.gender' | translate }}</ion-label>
+        <ion-radio-group [formControlName]="formFields.gender" class="gender-group">
+            <ion-item lines="none" class="ion-no-padding">
+                <ion-label class="ion-padding-end">{{ 'register-form.male' | translate }}</ion-label>
+                <ion-radio [value]="true"></ion-radio>
+            </ion-item>
+            <ion-item lines="none" class="ion-no-padding">
+                <ion-label class="ion-padding-end">{{ 'register-form.female' | translate }}</ion-label>
+                <ion-radio [value]="false"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
     </ion-item>
     <ion-button
         expand="block"

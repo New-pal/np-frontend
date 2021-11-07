@@ -1,6 +1,9 @@
 export enum RegisterFormFields {
     email = 'email',
-    name = 'name',
+    firstName = 'first_name',
+    lastName = 'last_name',
     password = 'password',
-    confirm = 'confirm'
+    confirm = 'confirm',
+    age = 'age',
+    gender = 'gender'
 }

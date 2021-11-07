@@ -22,7 +22,10 @@ export class RegisterFormComponent implements OnInit {
 
     public submitRegister(): void {
         this.registerCredentials.emit({
-            name: this.formService.form.get(this.formFields.name).value,
+            /* eslint-disable @typescript-eslint/naming-convention */
+            first_name: this.formService.form.get(this.formFields.firstName).value,
+            last_name: this.formService.form.get(this.formFields.lastName).value,
+            gender: this.formService.form.get(this.formFields.gender).value,
             email: this.formService.form.get(this.formFields.email).value,
             password: this.formService.form.get(this.formFields.password).value
         });
