@@ -4,7 +4,7 @@ import {AuthenticationService} from '@app/core/services/authentication.service';
 import {Observable, of, ReplaySubject} from 'rxjs';
 import {User} from '@app/profile/models/user';
 import {once} from '@app/core/decorators/once';
-import {filter, map, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -25,18 +25,11 @@ export class UserManagerService {
     public init(): Promise<void> {
         return new Promise(resolve => {
             this.auth.isAuthenticated$.pipe(
-                tap(() => resolve(void 0)),
-                filter(a => !a)
-            ).subscribe(
-                () => this.userSubject$.next(null)
-            );
+                switchMap(a => !a ? of(null) : this.userApi.get().pipe(map(r => r.results.pop()))),
+                tap(u => this.userSubject$.next(u)),
+                tap(() => resolve(void 0))
+            ).subscribe();
         });
-    }
-
-    public getUser(): Observable<User | null> {
-        return this.userSubject$.pipe(
-            switchMap(u => null === u ? this.userApi.get().pipe(map(r => r.results.pop())) : of(u))
-        );
     }
 
     public updateUser(user: Partial<User>): Observable<User> {

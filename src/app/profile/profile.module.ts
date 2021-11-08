@@ -9,18 +9,22 @@ import {ProfilePageRoutingModule} from './profile-routing.module';
 import {ProfilePage} from './profile.page';
 import {UserApiService} from '@app/profile/services/api/user-api.service';
 import {UserManagerService} from '@app/profile/services/user-manager.service';
+import {ProfileUserFormService} from '@app/profile/forms/profile-user-form.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        ProfilePageRoutingModule
+        ProfilePageRoutingModule,
+        TranslateModule
     ],
     declarations: [ProfilePage],
     providers: [
         UserApiService,
-        UserManagerService
+        UserManagerService,
+        ProfileUserFormService
     ]
 })
 export class ProfilePageModule {

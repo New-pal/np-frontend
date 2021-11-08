@@ -1,7 +1,8 @@
 {
     "tabs": {
         "map": "Map",
-        "search": "Search"
+        "search": "Search",
+        "profile": "Profile"
     },
     "menu": {
         "login": "Sign in",
@@ -22,5 +23,8 @@
         "gender": "Gender",
         "male": "male",
         "female": "female"
+    },
+    "profile-page": {
+        "title": "Profile"
     }
 }

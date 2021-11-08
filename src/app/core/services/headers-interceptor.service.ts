@@ -23,19 +23,30 @@ export class HeadersInterceptor implements HttpInterceptor {
         } catch (e) {
             return next.handle(req);
         }
+        if (this.getRestrictedUrls().includes(req.url)) {
+            return next.handle(req);
+        }
 
         return from(this.tokenManager.getAccessToken())
             .pipe(
                 catchError(_ => next.handle(req.clone({headers: req.headers.append('Content-Type', 'application/json')}))),
                 switchMap(token => {
-                    const headers = req.headers;
-                    // if (token) {
-                    //     headers = req.headers.append('Authorization', 'Bearer ' + token);
-                    // }
-                    headers.append('Content-Type', 'application/json');
+                    let headers = req.headers;
+                    if (token) {
+                        headers = headers.append('Authorization', 'Bearer ' + token);
+                    }
+                    headers =  headers.append('Content-Type', 'application/json');
 
                     return next.handle(req.clone({headers}));
                 })
             );
+    }
+
+    private getRestrictedUrls(): string[] {
+        return [
+            environment.backend.url + environment.backend.refresh,
+            environment.backend.url + environment.backend.auth,
+            environment.backend.url + environment.backend.register,
+        ];
     }
 }

@@ -3,8 +3,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler, Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Router} from '@angular/router';
 import {ErrorList} from '@app/core/enums/error-list';
-import {environment} from '@env/environment';
 import {ToastController} from '@ionic/angular';
+import {AuthenticationService} from '@app/core/services/authentication.service';
 
 const AUTHENTICATION_ERROR = 'authentication expired';
 const GENERIC_SERVER_ERROR = 'server error';
@@ -22,6 +22,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
 
     constructor(private readonly toaster: ToastController,
                 private readonly router: Router,
+                private readonly auth: AuthenticationService,
                 @Inject(PLATFORM_ID) private readonly platformId: Record<string, unknown>
     ) {
     }
@@ -59,12 +60,10 @@ export class GlobalErrorHandlerService implements ErrorHandler {
 
             return;
         }
-
-        if (401 === response.status || 'invalid_grant' === response.message) {
-            if (response.url.endsWith(environment.backend.refresh)) {
-                this.showMessage(AUTHENTICATION_ERROR);
-                this.router.navigateByUrl('/auth/login');
-            }
+        if (401 === response.status) {
+            this.showMessage(AUTHENTICATION_ERROR);
+            // this.auth.logout().subscribe();
+            this.router.navigateByUrl('/auth/login');
 
             return;
         }

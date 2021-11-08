@@ -87,12 +87,12 @@ export class AuthenticationService {
                     const refreshData: RefreshDataInterface = {refresh_token: refresh};
                     this.client.post<AuthResponseInterface, RefreshDataInterface>(this.tokenRefreshUrl, refreshData).subscribe(
                         (response: AuthResponseInterface) => this.tokenManager.setTokens(response).then(
-                            _ => {
+                            () => {
                                 subscriber.next();
                                 subscriber.complete();
                             }
                         ),
-                        _ => EMPTY
+                        err => subscriber.error(err)
                     );
                 }).catch(err => subscriber.error(err));
             }

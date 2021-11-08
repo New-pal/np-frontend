@@ -3,7 +3,8 @@ import {Injectable} from '@angular/core';
 import {AuthenticationService} from '@app/core/services/authentication.service';
 import {environment} from '@env/environment';
 import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {catchError, switchMap} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 /**
  *  Tries to refresh auth token if it has expired
@@ -12,7 +13,8 @@ import {switchMap} from 'rxjs/operators';
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(
-        private readonly auth: AuthenticationService
+        private readonly auth: AuthenticationService,
+        private router: Router
     ) {
     }
 
@@ -33,6 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
             switchMap(
                 (isNeedToRefresh: boolean) => isNeedToRefresh ?
                     this.auth.refresh().pipe(
+                        catchError(() => this.router.navigateByUrl('/auth/login')),
                         switchMap(() => next.handle(req))
                     ) : next.handle(req)
             )

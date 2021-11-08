@@ -7,7 +7,6 @@ export const environment = {
         register: '/auth/register',
         refresh: '/auth/refresh'
     },
-    refreshTokenExpireTime: 3600,
     defaultLang: 'ru',
     mapUrl: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 };

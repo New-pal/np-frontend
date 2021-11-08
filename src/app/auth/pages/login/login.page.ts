@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonViewWillEnter} from '@app/core/interfaces/ionic.interfaces';
 import {Credentials} from '@app/auth/interfaces/credentials';
 import {AuthenticationService} from '@app/core/services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -10,7 +11,7 @@ import {AuthenticationService} from '@app/core/services/authentication.service';
 })
 export class LoginPage implements IonViewWillEnter {
 
-    constructor(private auth: AuthenticationService) {
+    constructor(private auth: AuthenticationService, private router: Router) {
     }
 
     public ionViewWillEnter(): void {
@@ -19,8 +20,7 @@ export class LoginPage implements IonViewWillEnter {
 
     public onLogin(credentials: Credentials): void {
         this.auth.login(credentials).subscribe(
-            _ => console.log('auth success'),
-            err => console.error('auth error ', err)
+            _ => this.router.navigateByUrl('/'),
         );
     }
 }
