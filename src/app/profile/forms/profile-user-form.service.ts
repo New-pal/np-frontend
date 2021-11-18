@@ -16,7 +16,7 @@ export class ProfileUserFormService {
             [ProfileUserFormFields.firstName]: [user?.first_name],
             [ProfileUserFormFields.lastName]: [user?.last_name],
             [ProfileUserFormFields.birthday]: [user?.birthday],
-            [ProfileUserFormFields.gender]: [user?.gender]
+            [ProfileUserFormFields.gender]: [user?.gender ? 'man': 'woman']
         });
     }
 }

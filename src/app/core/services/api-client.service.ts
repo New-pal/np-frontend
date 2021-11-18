@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '@env/environment';
 import {forkJoin, Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
+import {ApiListResponseInterface} from '@app/core/interfaces/api-list-response-interface';
 
 @Injectable({
     providedIn: 'root'
@@ -25,8 +26,8 @@ export class ApiClientService {
         return this.http.put<T>(this.getHost() + url, data);
     }
 
-    public patch<T extends { id: number }>(url: string, data: Record<string, unknown> = {}): Observable<T> {
-        return this.http.patch<T>(this.getHost() + url, data);
+    public patch<T extends { id: number }>(url: string, data: T): Observable<ApiListResponseInterface<T>> {
+        return this.http.patch<ApiListResponseInterface<T>>(this.getHost() + url, data);
     }
 
     public delete(url: string, params?: { [param: string]: string | string[] }): Observable<any> {

@@ -22,9 +22,17 @@ export abstract class AbstractApiService<T extends {id: number}> extends Abstrac
         );
     }
 
-    public patch(data: Partial<T>, key?: string | number): Observable<T> {
-        return this.client.patch<T>(`${this.getUrl() + (key ? key : data.id)}/`, HelperService.clear(data)).pipe(
-            map(raw => this.transform(raw))
+    public patch(data: T, key?: string | number | null): Observable<T> {
+        let k;
+        if (undefined === key) {
+            k = data.id;
+        } else if (null === key) {
+            k = '';
+        } else {
+            k = key;
+        }
+        return this.client.patch<T>(`${this.getUrl() + k}`, HelperService.clear(this.transform(data))).pipe(
+            map(raw => this.transform(raw.results.pop()))
         );
     }
 
@@ -35,7 +43,7 @@ export abstract class AbstractApiService<T extends {id: number}> extends Abstrac
     // }
 
     public delete(data: T): Observable<any> {
-        return this.client.delete(`${this.getUrl() + data.id}/`);
+        return this.client.delete(`${this.getUrl() + data.id}`);
     }
 
     public createList(data: T[]): Observable<T[]> {

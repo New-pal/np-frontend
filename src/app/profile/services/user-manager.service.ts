@@ -32,8 +32,8 @@ export class UserManagerService {
         });
     }
 
-    public updateUser(user: Partial<User>): Observable<User> {
-        return this.userApi.patch(user).pipe(
+    public updateUser(user: User): Observable<User> {
+        return this.userApi.patch(user, null).pipe(
             tap(u => this.userSubject$.next(u))
         );
     }

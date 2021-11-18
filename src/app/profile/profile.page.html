@@ -4,6 +4,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="formService.form">
+    <ion-col size-xs="12" size-sm="10" size-md="6" size-xl="4" size-lg="4">
+        <form [formGroup]="formService.form" (ngSubmit)="save()" (keydown.enter)="save()">
+            <ion-item>
+                <ion-label color="medium" position="floating">{{ 'profile-page.user-profile.first-name' | translate }}</ion-label>
+                <ion-input type="text" name="firstName" [formControlName]="formFields.firstName"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="medium" position="floating">{{ 'profile-page.user-profile.last-name' | translate }}</ion-label>
+                <ion-input type="text" name="lastName" [formControlName]="formFields.lastName"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="medium" position="floating">{{ 'profile-page.user-profile.birthday' | translate }}</ion-label>
+                <ion-datetime [formControlName]="formFields.birthday"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label color="medium" position="floating">{{ 'profile-page.user-profile.gender' | translate }}</ion-label>
+                <ion-segment [formControlName]="formFields.gender">
+                    <ion-segment-button value="man">
+                        <ion-icon name="man-outline"></ion-icon>
+                    </ion-segment-button>
+                    <ion-segment-button value="woman">
+                        <ion-icon name="woman-outline"></ion-icon>
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-item>
+            <ion-button expand="block"
+                        fill="solid"
+                        color="primary"
+                        type="submit"
+                        class="ion-margin-top">
+                {{ 'profile-page.save' | translate }}
+            </ion-button>
+        </form>
+    </ion-col>
 </ion-content>

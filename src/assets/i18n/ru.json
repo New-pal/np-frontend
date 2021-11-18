@@ -28,6 +28,13 @@
         "submit": "Зарегестрироваться"
     },
     "profile-page": {
-        "title": "Профиль"
+        "title": "Профиль",
+        "save": "Сохранить",
+        "user-profile": {
+            "first-name": "Имя",
+            "last-name": "Фамилия",
+            "gender": "Пол",
+            "birthday": "День рождения"
+        }
     }
 }

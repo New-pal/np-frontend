@@ -25,6 +25,13 @@
         "female": "female"
     },
     "profile-page": {
-        "title": "Profile"
+        "title": "Profile",
+        "save": "Save",
+        "user-profile": {
+            "first-name": "First name",
+            "last-name": "Last name",
+            "gender": "Gender",
+            "birthday": "Birthday"
+        }
     }
 }

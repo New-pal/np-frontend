@@ -8,7 +8,7 @@ import {ApiClientService} from '@app/core/services/api-client.service';
 import {PreLogoutService} from '@app/core/services/pre-logout.service';
 import {TokenManagerService} from '@app/core/services/token-manager.service';
 import {environment} from '@env/environment';
-import {BehaviorSubject, EMPTY, from, Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, from, Observable, of, ReplaySubject} from 'rxjs';
 import {catchError, filter, first, map, switchMap, tap} from 'rxjs/operators';
 
 /**
